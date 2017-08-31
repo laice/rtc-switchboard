@@ -1,9 +1,14 @@
+const fs = require('fs');
 let config = require('./config.json');
 
 
+let key = fs.readFileSync(config.key, 'utf8');
+let cert = fs.readFileSync(config.cert, 'utf8');
+
+
 var server = require('https').createServer({
-    key: config.key,
-    cert: config.cert
+    key: key,
+    cert: cert
 });
 var switchboard = require('./')(server, { servelib: true });
 var port = parseInt(process.env.NODE_PORT || process.env.PORT || process.argv[2], 10) || 8444;
